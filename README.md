@@ -26,8 +26,8 @@ Ketiga anggota harus ikut memeriksa konsistensi anotasi. Test set dipisahkan ber
 ├── .gitignore
 ├── notebooks/
 │   ├── 01_profiling_dataset.ipynb
-│   ├── 02_annotation_and_split.ipynb   # tahap berikutnya
-│   └── 03_train_evaluate_ner.ipynb     # tahap berikutnya
+│   ├── 02_prepare_annotation.ipynb
+│   └── 03_train_evaluate_ner.ipynb
 ├── data/                               # data lokal; jangan commit dataset mentah
 ├── models/                             # artefak model; jangan commit file besar tanpa keputusan kelompok
 ├── app/                                # API dan antarmuka web

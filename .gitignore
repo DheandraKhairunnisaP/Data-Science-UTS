@@ -1,0 +1,21 @@
+# Data artikel — jangan commit data dari dosen
+data/*
+!data/README.md
+*.csv
+*.zip
+
+# Model/artifact besar
+models/*
+!models/README.md
+*.spacy
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+
+# Colab/Jupyter temporary outputs
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+.env

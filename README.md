@@ -45,3 +45,13 @@ Ketiga anggota harus ikut memeriksa konsistensi anotasi. Test set dipisahkan ber
 ## Catatan data
 
 Kolom `entities` pada CSV belum tentu merupakan anotasi gold-standard. Notebook profiling memeriksa apakah kolom ini terisi, tetapi anotasi final untuk evaluasi harus ditinjau manusia. Data artikel sumber tidak disalin ke repository.
+
+
+## Notebook lanjutan
+
+- [Notebook 01 — Profiling Dataset](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/01_profiling_dataset.ipynb)
+- [Notebook 02 — Persiapan Anotasi](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/02_prepare_annotation.ipynb)
+- [Notebook 03 — Training dan Evaluasi](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/03_train_evaluate_ner.ipynb)
+- [Notebook 04 — API dan Web App](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/04_build_api_web_app.ipynb)
+
+Jalankan notebook secara berurutan. Notebook 03 membutuhkan CSV anotasi yang sudah ditinjau manusia. Notebook 04 membutuhkan paket model hasil Notebook 03.

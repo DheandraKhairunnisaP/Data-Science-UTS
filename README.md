@@ -27,7 +27,8 @@ Ketiga anggota harus ikut memeriksa konsistensi anotasi. Test set dipisahkan ber
 ├── notebooks/
 │   ├── 01_profiling_dataset.ipynb
 │   ├── 02_prepare_annotation.ipynb
-│   └── 03_train_evaluate_ner.ipynb
+│   ├── 03_train_evaluate_ner.ipynb
+│   └── 05_run_role3_app_colab.ipynb
 ├── data/                               # data lokal; jangan commit dataset mentah
 ├── models/                             # artefak model; jangan commit file besar tanpa keputusan kelompok
 ├── app/                                # API dan antarmuka web
@@ -55,3 +56,23 @@ Kolom `entities` pada CSV belum tentu merupakan anotasi gold-standard. Notebook 
 - [Notebook 04 — API dan Web App](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/04_build_api_web_app.ipynb)
 
 Jalankan notebook secara berurutan. Notebook 03 membutuhkan CSV anotasi yang sudah ditinjau manusia. Notebook 04 membutuhkan paket model hasil Notebook 03.
+
+
+## Role 3 — API dan Web App
+
+Source code aplikasi berada di:
+- `app/main.py`: FastAPI, validasi input, dan inferensi model.
+- `web/index.html`: halaman form dan tabel hasil.
+- `tests/test_api.py`: delapan tes otomatis.
+- `requirements.txt`: dependensi Python.
+- `docs/role2_evaluation_audit.md`: catatan pemeriksaan konsistensi metrik yang dikirim Role 2.
+
+### Menjalankan demo di Google Colab
+
+Buka [Notebook 05 — Run Role 3 App](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/05_run_role3_app_colab.ipynb), lalu unggah paket `Role3_Article_NER_Service.zip` yang disertakan dalam hasil kerja kelompok. Notebook menjalankan test, memulai server, dan menampilkan tautan aplikasi.
+
+### Menjalankan lokal
+
+Pasang dependensi dengan `pip install -r requirements.txt`, pastikan model dari Role 2 diekstrak ke `models/ner_custom_v1/`, lalu jalankan `uvicorn app.main:app --host 127.0.0.1 --port 8000`. Buka `http://127.0.0.1:8000`. Jalankan tes dengan `python -m pytest -q`.
+
+**Evaluasi model:** file deliverables Role 2 mempunyai ketidaksesuaian antara support metrik overall dan metrik per-label. Lihat `docs/role2_evaluation_audit.md`; angka per-label perlu dihitung ulang sebelum dilaporkan sebagai hasil final.

@@ -63,7 +63,7 @@ Jalankan notebook secara berurutan. Notebook 03 membutuhkan CSV anotasi yang sud
 Source code aplikasi berada di:
 - `app/main.py`: FastAPI, validasi input, dan inferensi model.
 - `web/index.html`: halaman form dan tabel hasil.
-- `tests/test_api.py`: delapan tes otomatis.
+- `tests/test_api.py`: sembilan tes otomatis.
 - `requirements.txt`: dependensi Python.
 - `docs/role2_evaluation_audit.md`: catatan pemeriksaan konsistensi metrik yang dikirim Role 2.
 

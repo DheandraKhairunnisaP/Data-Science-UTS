@@ -19,7 +19,7 @@ Label yang ditampilkan adalah `PERSON`, `ORG`, `GPE`, `LOC`, `DATE`, dan `EVENT`
 
 ## Menjalankan di Google Colab
 
-Buka [Notebook Role 3 — Jalankan Aplikasi](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/04_role3_app_colab.ipynb), lalu jalankan sel dari atas ke bawah. Notebook mengambil source code dan model dari repository, memasang dependensi, menjalankan tes API, dan membuka tautan sementara untuk halaman web.
+Buka [Notebook Role 3 — Jalankan Aplikasi](https://colab.research.google.com/drive/1ha284rNZHtT1ObXsZTlahDYOh0sSsXw1#scrollTo=0a183d2d), lalu jalankan sel dari atas ke bawah. Notebook mengambil source code dan model dari repository, memasang dependensi, menjalankan tes API, dan membuka tautan sementara untuk halaman web.
 
 Notebook ini tidak meminta CSV dataset dari dosen.
 

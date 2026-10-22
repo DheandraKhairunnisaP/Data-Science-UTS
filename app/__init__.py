@@ -1,0 +1,1 @@
+"""Article NER service package."""

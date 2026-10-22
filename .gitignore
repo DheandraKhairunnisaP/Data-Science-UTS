@@ -1,12 +1,15 @@
-# Data artikel — jangan commit data dari dosen
+# Dataset articles from the instructor must not be committed
 data/*
 !data/README.md
 *.csv
 *.zip
 
-# Model/artifact besar
+# Keep model weights out of the public repository; obtain them as an artifact
 models/*
 !models/README.md
+!models/ner_custom_v1/
+models/ner_custom_v1/*
+!models/ner_custom_v1/README.md
 *.spacy
 *.pt
 *.pth
@@ -14,8 +17,9 @@ models/*
 *.safetensors
 *.onnx
 
-# Colab/Jupyter temporary outputs
+# Notebook and Python temporary files
 .ipynb_checkpoints/
 __pycache__/
+.pytest_cache/
 *.py[cod]
 .env

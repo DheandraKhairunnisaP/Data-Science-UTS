@@ -1,5 +1,7 @@
-# Model artifact
+# Model NER
 
-Place the extracted `ner_custom_v1` spaCy model from Role 2 in this directory. The expected path is `models/ner_custom_v1/config.cfg`.
+Aplikasi menggunakan model spaCy `ner_custom_v1` yang diserahkan oleh Role 2. Arsip model berada di `models/ner_custom_v1.zip`.
 
-Do not commit large model weights to the public repository unless the group and instructor explicitly agree. For a runnable demo, share `Role3_Article_NER_Service.zip` or an approved model artifact link separately. The model artifact declares spaCy compatibility `>=3.8.0,<3.9.0`.
+Untuk menjalankan aplikasi lokal, ekstrak arsip tersebut ke `models/ner_custom_v1/`. Pastikan file `config.cfg` berada langsung di dalam folder hasil ekstraksi.
+
+Model ini kompatibel dengan spaCy `>=3.8,<3.9`. CSV dataset mentah dari dosen tidak disimpan di repository.

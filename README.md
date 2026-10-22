@@ -1,78 +1,100 @@
-# Data-Science-UTS
+# Article NER Service
 
-Proyek UTS NLP: **Article Named-Entity Recognition (NER) Service**. Sistem menerima judul dan isi artikel, lalu mengembalikan entitas bernama beserta label dan posisi karakter melalui API serta antarmuka web.
+Proyek ini dibuat untuk tugas UTS NLP. Aplikasi menerima judul dan isi artikel berita, kemudian menampilkan entitas bernama yang ditemukan oleh model, jenis entitasnya, dan posisi karakter di dalam teks.
 
-## Mulai di Google Colab
+## Apa itu NER?
 
-1. Buka [Notebook 01 — Profiling Dataset](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/01_profiling_dataset.ipynb).
-2. Jalankan sel dari atas ke bawah.
-3. Unggah ZIP dataset dari dosen ketika diminta.
-4. Unduh dan simpan ZIP hasil profiling. Jangan commit dataset mentah ke repository.
-5. Setelah profiling dan audit duplikasi diperiksa, lanjut ke anotasi manual dan pembagian data.
+Named-Entity Recognition (NER) adalah proses mengenali nama atau informasi tertentu dalam teks, lalu memberi label pada bagian tersebut. Pada proyek ini, NER digunakan untuk mencari entitas seperti orang, organisasi, lokasi, tanggal, dan peristiwa.
 
-## Pembagian kerja 3 anggota
+Aplikasi memakai pipeline spaCy `ner_custom_v1` dari tahap Role 2. Hasil prediksi bisa saja melewatkan nama atau memberikan label yang keliru, sehingga hasil tetap perlu diperiksa.
 
-- **Anggota 1 — Data dan anotasi:** profiling, audit kualitas data, pedoman label, anotasi span-level, dan dokumentasi sumber/ID artikel.
-- **Anggota 2 — Model dan evaluasi:** baseline pretrained, training/adaptasi pipeline dengan anotasi kelompok, evaluasi precision/recall/F1, per-label metrics, dan analisis kesalahan.
-- **Anggota 3 — Aplikasi dan pengujian:** API `POST /extract-entities`, antarmuka browser, validasi input, error handling, pengujian integrasi, requirements, dan README.
+## Cara kerja aplikasi
 
-Ketiga anggota harus ikut memeriksa konsistensi anotasi. Test set dipisahkan berdasarkan identitas artikel dan tidak boleh digunakan untuk tuning model.
+1. Pengguna mengisi judul dan isi artikel di halaman web.
+2. Frontend mengirimkan data ke endpoint `POST /extract-entities`.
+3. Backend FastAPI menggabungkan judul dan isi artikel, lalu memprosesnya dengan model NER.
+4. Hasil ditampilkan sebagai tabel berisi teks entitas, label, posisi awal, dan posisi akhir; teks artikel juga diberi sorotan.
 
-## Rencana struktur repository
+Label yang ditampilkan adalah `PERSON`, `ORG`, `GPE`, `LOC`, `DATE`, dan `EVENT`, jika dikenali oleh model.
 
+## Menjalankan di Google Colab
+
+Buka [Notebook Role 3 — Jalankan Aplikasi](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/04_role3_app_colab.ipynb), lalu jalankan sel dari atas ke bawah. Notebook mengambil source code dan model dari repository, memasang dependensi, menjalankan tes API, dan membuka tautan sementara untuk halaman web.
+
+Notebook ini tidak meminta CSV dataset dari dosen.
+
+## Menjalankan di komputer sendiri
+
+Gunakan Python yang kompatibel dengan spaCy 3.8.
+
+1. Pasang dependensi dari folder utama repository:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Ekstrak model dari `models/ner_custom_v1.zip` ke folder `models/ner_custom_v1/`. Setelah diekstrak, file `config.cfg` harus berada langsung di dalam folder tersebut.
+
+   PowerShell:
+   ```powershell
+   Expand-Archive -LiteralPath models/ner_custom_v1.zip -DestinationPath models/ner_custom_v1 -Force
+   ```
+
+   Linux/macOS:
+   ```bash
+   python -m zipfile -e models/ner_custom_v1.zip models/ner_custom_v1
+   ```
+
+3. Jalankan server:
+
+   ```bash
+   uvicorn app.main:app --host 127.0.0.1 --port 8000
+   ```
+
+4. Buka `http://127.0.0.1:8000`. Dokumentasi API tersedia di `http://127.0.0.1:8000/docs`.
+
+5. Jalankan pengujian:
+
+   ```bash
+   python -m pytest -q
+   ```
+
+## Endpoint API
+
+Endpoint utama adalah `POST /extract-entities`.
+
+Contoh request:
+
+```json
+{
+  "title": "Judul artikel",
+  "body": "Isi artikel berita."
+}
 ```
-.
-├── README.md
-├── .gitignore
-├── notebooks/
-│   ├── 01_profiling_dataset.ipynb
-│   ├── 02_prepare_annotation.ipynb
-│   ├── 03_train_evaluate_ner.ipynb
-│   └── 05_run_role3_app_colab.ipynb
-├── data/                               # data lokal; jangan commit dataset mentah
-├── models/                             # artefak model; jangan commit file besar tanpa keputusan kelompok
-├── app/                                # API dan antarmuka web
-└── tests/                              # kasus uji otomatis
-```
 
-## Persyaratan inti dari studi kasus
+Response berisi array `entities` serta metadata pada `meta`. Setiap entitas memiliki `text`, `label`, `start`, dan `end`.
 
-- Masukan JSON berisi `title` dan `body`; keduanya harus string dan tidak kosong.
-- Endpoint mengembalikan `text`, `label`, `start`, `end`, serta metadata model dan jumlah entitas.
-- Model akhir harus dilatih/diadaptasi menggunakan anotasi dari data contoh; pretrained model hanya baseline.
-- Evaluasi held-out test melaporkan exact-span precision, recall, F1 keseluruhan dan per label, perbandingan baseline-vs-trained, serta minimal tiga kesalahan.
-- Minimal lima kasus uji otomatis/reproducible; README memuat instalasi, startup, contoh request/response, model, arsitektur, dan keterbatasan.
+Posisi karakter dihitung dari awal teks gabungan `title + newline + body`. Indeks dimulai dari nol, `start` termasuk karakter pertama, sedangkan `end` tidak termasuk karakter setelah teks entitas.
 
-## Catatan data
+## Pembagian pekerjaan
 
-Kolom `entities` pada CSV belum tentu merupakan anotasi gold-standard. Notebook profiling memeriksa apakah kolom ini terisi, tetapi anotasi final untuk evaluasi harus ditinjau manusia. Data artikel sumber tidak disalin ke repository.
+- **Role 1 — Data dan anotasi:** memeriksa dataset, membersihkan data, menyiapkan anotasi entitas, dan memeriksa konsistensi label.
+- **Role 2 — Model dan evaluasi:** melatih atau mengadaptasi model NER dan mengevaluasi hasilnya.
+- **Role 3 — Aplikasi:** membuat API, halaman web, validasi input, dan pengujian integrasi.
 
+## Berkas dalam repository
 
-## Notebook lanjutan
+- `models/Data_&_Anotasi.ipynb`: notebook pekerjaan data dan anotasi.
+- `models/Training_Model_NER_UTS (1).ipynb`: notebook training model.
+- `models/ner_custom_v1.zip`: artefak model yang digunakan aplikasi.
+- `notebooks/01_profiling_dataset.ipynb`, `02_prepare_annotation.ipynb`, dan `03_train_evaluate_ner.ipynb`: notebook alur kerja data dan model.
+- `app/main.py`: backend API.
+- `web/index.html`: antarmuka web.
+- `tests/test_api.py`: pengujian API.
+- `docs/`: contoh request dan catatan evaluasi.
 
-- [Notebook 01 — Profiling Dataset](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/01_profiling_dataset.ipynb)
-- [Notebook 02 — Persiapan Anotasi](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/02_prepare_annotation.ipynb)
-- [Notebook 03 — Training dan Evaluasi](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/03_train_evaluate_ner.ipynb)
-- [Notebook 04 — API dan Web App](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/04_build_api_web_app.ipynb)
+CSV dataset mentah yang diberikan dosen tidak disertakan dalam repository.
 
-Jalankan notebook secara berurutan. Notebook 03 membutuhkan CSV anotasi yang sudah ditinjau manusia. Notebook 04 membutuhkan paket model hasil Notebook 03.
+## Catatan evaluasi
 
-
-## Role 3 — API dan Web App
-
-Source code aplikasi berada di:
-- `app/main.py`: FastAPI, validasi input, dan inferensi model.
-- `web/index.html`: halaman form dan tabel hasil.
-- `tests/test_api.py`: sembilan tes otomatis.
-- `requirements.txt`: dependensi Python.
-- `docs/role2_evaluation_audit.md`: catatan pemeriksaan konsistensi metrik yang dikirim Role 2.
-
-### Menjalankan demo di Google Colab
-
-Buka [Notebook 05 — Run Role 3 App](https://colab.research.google.com/github/DheandraKhairunnisaP/Data-Science-UTS/blob/main/notebooks/05_run_role3_app_colab.ipynb), lalu unggah paket `Role3_Article_NER_Service.zip` yang disertakan dalam hasil kerja kelompok. Notebook menjalankan test, memulai server, dan menampilkan tautan aplikasi.
-
-### Menjalankan lokal
-
-Pasang dependensi dengan `pip install -r requirements.txt`, pastikan model dari Role 2 diekstrak ke `models/ner_custom_v1/`, lalu jalankan `uvicorn app.main:app --host 127.0.0.1 --port 8000`. Buka `http://127.0.0.1:8000`. Jalankan tes dengan `python -m pytest -q`.
-
-**Evaluasi model:** file deliverables Role 2 mempunyai ketidaksesuaian antara support metrik overall dan metrik per-label. Lihat `docs/role2_evaluation_audit.md`; angka per-label perlu dihitung ulang sebelum dilaporkan sebagai hasil final.
+Sebelum angka performa dipakai di laporan akhir, pastikan metrik keseluruhan dan metrik per label pada hasil Role 2 berasal dari perhitungan yang konsisten. Catatan pemeriksaan terdapat di [docs/role2_evaluation_audit.md](docs/role2_evaluation_audit.md).

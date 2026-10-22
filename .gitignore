@@ -1,25 +1,18 @@
-# Dataset articles from the instructor must not be committed
-data/*
-!data/README.md
+# Dataset mentah dari dosen: jangan masukkan ke repository
+data/
 *.csv
+
+# Arsip hasil kerja lokal; artefak model Role 2 yang sudah ada tetap dipertahankan
 *.zip
+!models/ner_custom_v1.zip
+!models/ner_model_deliverables.zip
 
-# Keep model weights out of the public repository; obtain them as an artifact
-models/*
-!models/README.md
-!models/ner_custom_v1/
-models/ner_custom_v1/*
-!models/ner_custom_v1/README.md
-*.spacy
-*.pt
-*.pth
-*.bin
-*.safetensors
-*.onnx
+# Model yang sudah diekstrak di komputer lokal
+models/ner_custom_v1/
 
-# Notebook and Python temporary files
-.ipynb_checkpoints/
+# File sementara Python dan Colab
 __pycache__/
-.pytest_cache/
 *.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
 .env

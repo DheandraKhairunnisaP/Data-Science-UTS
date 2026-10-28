@@ -21,7 +21,6 @@ Label yang ditampilkan adalah `PERSON`, `ORG`, `GPE`, `LOC`, `DATE`, dan `EVENT`
 
 Buka [Notebook Role 3 — Jalankan Aplikasi](https://colab.research.google.com/drive/1ha284rNZHtT1ObXsZTlahDYOh0sSsXw1#scrollTo=0a183d2d), lalu jalankan sel dari atas ke bawah. Notebook mengambil source code dan model dari repository, memasang dependensi, menjalankan tes API, dan membuka tautan sementara untuk halaman web.
 
-Notebook ini tidak meminta CSV dataset dari dosen.
 
 ## Menjalankan di komputer sendiri
 
@@ -78,9 +77,9 @@ Posisi karakter dihitung dari awal teks gabungan `title + newline + body`. Indek
 
 ## Pembagian pekerjaan
 
-- **Role 1 — Data dan anotasi:** memeriksa dataset, membersihkan data, menyiapkan anotasi entitas, dan memeriksa konsistensi label.
-- **Role 2 — Model dan evaluasi:** melatih atau mengadaptasi model NER dan mengevaluasi hasilnya.
-- **Role 3 — Aplikasi:** membuat API, halaman web, validasi input, dan pengujian integrasi.
+- ** Alvina Nur Laila A (Role 1) Data dan anotasi:** memeriksa dataset, membersihkan data, menyiapkan anotasi entitas, dan memeriksa konsistensi label.
+- ** Nadia Tifara S (Role 2) Model dan evaluasi:** melatih atau mengadaptasi model NER dan mengevaluasi hasilnya.
+- ** Dheandra Khairunnisa P (Role 3) Aplikasi:** membuat API, halaman web, validasi input, dan pengujian integrasi.
 
 ## Berkas dalam repository
 
@@ -95,6 +94,5 @@ Posisi karakter dihitung dari awal teks gabungan `title + newline + body`. Indek
 
 CSV dataset mentah yang diberikan dosen tidak disertakan dalam repository.
 
-## Catatan evaluasi
-
-Sebelum angka performa dipakai di laporan akhir, pastikan metrik keseluruhan dan metrik per label pada hasil Role 2 berasal dari perhitungan yang konsisten. Catatan pemeriksaan terdapat di [docs/role2_evaluation_audit.md](docs/role2_evaluation_audit.md).
+## Documentation Video
+- (https://drive.google.com/drive/folders/1QYFRxhkaTELBSp5HBqtMt07KvI7DnRZ4?usp=drive_link) Dokumentasi berupa video demo untuk melihat hasil dashboard.
